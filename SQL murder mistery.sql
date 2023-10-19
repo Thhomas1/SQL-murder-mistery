@@ -89,11 +89,87 @@ En este caso utilizamos el IN para poder mostrar una lista de ID's...
 
 
 
-Pistas obtenidas por medio de la consulta:
+Pistas obtenidas por medio de los testigos:
 
-El ID 14887 
-
-El ID 16371
+1) El asesino era hombre
+2) Miembro de un gimnasio (Confirmado por los dos testigos)
+3) Gold member y su bag era 48Z
+4) Auto con patente H42W
+5) Fue el 9 de enero del 2018
 
 */
-              
+
+/*
+SELECT *
+FROM get_fit_now_member G
+INNER JOIN get_fit_now_check_in C ON G.id = C.membership_id
+INNER JOIN person P ON P.id = G.person_id
+INNER JOIN drivers_license L ON L.id = P.license_id
+
+WHERE C.check_in_date = '20180109'
+AND G.membership_status = 'gold'
+AND G.id LIKE '48Z%'
+AND L.gender = 'male'
+AND L.plate_number LIKE '%H42W%'
+
+- ASESINO = Jeremy Bowers
+
+
+-- Completamos los datos
+
+INSERT INTO solution VALUES (1, 'Jeremy Bowers');
+        
+        SELECT value FROM solution;
+
+*/
+
+-- Pero hay algo mas detras de todo esto...
+
+/*
+SELECT * 
+FROM interview
+WHERE person_id = 67318
+
+
+1)La info que sacamos es que es fue contratada por una mujer con mucha guita
+2) Mucha plata
+3) Estatura promedio 5'5 - 5'7
+4) Pelo rojo
+5) Auto Tesla Model S
+6) Estuvo en el concierto SQL 3 veces en Diciembre de 2017 
+
+*/
+
+
+/*
+
+SELECT P.id, P.name, I.annual_income, F.event_name, F.date, L.*
+FROM person P
+INNER JOIN drivers_license L ON L.id = P.license_id
+INNER JOIN income I ON I.ssn = P.ssn
+INNER JOIN facebook_event_checkin F ON F.person_id = P.id
+WHERE L.gender = 'female'
+AND L.car_make = 'Tesla'
+AND L.car_model = 'Model S'
+AND L.height >= 66
+AND L.height <= 67
+AND L.hair_color = 'red'
+
+
+Obtuvimos que es Miranda Priestly 
+Por lo tanto ponemos en la solucion...
+
+
+
+INSERT INTO solution VALUES (1, 'Miranda Priestly');
+        
+        SELECT value FROM solution;
+*/
+
+
+
+
+
+
+
+
